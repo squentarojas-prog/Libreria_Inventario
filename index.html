@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Bazar Carmelito | Registro de Productos</title>
+
+    <style>
+
+        /* =========================================
+           CONFIGURACIÓN GENERAL
+        ========================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #eef3f7, #dfe9f1);
+            color: #2c3e50;
+            min-height: 100vh;
+        }
+
+
+        /* =========================================
+           ENCABEZADO
+        ========================================= */
+
+        header {
+            background: linear-gradient(135deg, #1f3b4d, #345d72);
+            color: white;
+            padding: 35px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo {
+            font-size: 42px;
+            margin-bottom: 8px;
+        }
+
+        header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+
+        /* =========================================
+           CONTENEDOR PRINCIPAL
+        ========================================= */
+
+        main {
+            width: 92%;
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+
+
+        /* =========================================
+           TARJETA DEL FORMULARIO
+        ========================================= */
+
+        .formulario {
+            background: white;
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            border-top: 6px solid #345d72;
+        }
+
+
+        /* =========================================
+           TÍTULO
+        ========================================= */
+
+        .titulo-formulario {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .titulo-formulario h2 {
+            color: #26384a;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .titulo-formulario p {
+            color: #777;
+            font-size: 15px;
+        }
+
+
+        /* =========================================
+           CUADRÍCULA DE CAMPOS
+        ========================================= */
+
+        .campos-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .campo-completo {
+            grid-column: span 2;
+        }
+
+
+        /* =========================================
+           ETIQUETAS
+        ========================================= */
+
+        label {
+            font-weight: bold;
+            color: #34495e;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+
+        /* =========================================
+           INPUTS Y SELECT
+        ========================================= */
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d5dce3;
+            border-radius: 9px;
+            font-size: 15px;
+            background: #f9fbfc;
+            transition: 0.3s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #345d72;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(52, 93, 114, 0.12);
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+
+        /* =========================================
+           BOTONES
+        ========================================= */
+
+        .botones {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 35px;
+        }
+
+        button {
+            border: none;
+            padding: 14px 28px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .registrar {
+            background: linear-gradient(135deg, #26384a, #345d72);
+            color: white;
+            box-shadow: 0 5px 12px rgba(38, 56, 74, 0.25);
+        }
+
+        .registrar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 16px rgba(38, 56, 74, 0.35);
+        }
+
+        .limpiar {
+            background: #edf1f4;
+            color: #455a64;
+        }
+
+        .limpiar:hover {
+            background: #dce4e9;
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================================
+           MENSAJE DE ÉXITO
+        ========================================= */
+
+        .mensaje {
+            display: none;
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .mensaje.exito {
+            display: block;
+            background: #e7f7ed;
+            color: #237a43;
+            border: 1px solid #b9e6c8;
+        }
+
+
+        /* =========================================
+           PIE DE PÁGINA
+        ========================================= */
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #607080;
+            font-size: 13px;
+        }
+
+
+        /* =========================================
+           DISEÑO RESPONSIVO
+        ========================================= */
+
+        @media (max-width: 700px) {
+
+            .campos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .campo-completo {
+                grid-column: span 1;
+            }
+
+            .formulario {
+                padding: 25px 20px;
+            }
+
+            .botones {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         ENCABEZADO
+    ========================================= -->
+
+    <header>
+
+        <div class="logo">🏪</div>
+
+        <h1>Bazar Carmelito</h1>
+
+        <p>
+            Sistema General de Gestión de Productos e Inventario
+        </p>
+
+    </header>
+
+
+
+    <!-- =========================================
+         CONTENIDO PRINCIPAL
+    ========================================= -->
+
+    <main>
+
+        <section class="formulario">
+
+
+            <!-- TÍTULO -->
+
+            <div class="titulo-formulario">
+
+                <h2>📦 Registro de Producto</h2>
+
+                <p>
+                    Complete la información para registrar un nuevo producto
+                </p>
+
+            </div>
+
+
+
+            <!-- FORMULARIO -->
+
+            <form id="formProducto">
+
+
+                <div class="campos-grid">
+
+
+                    <!-- ID PRODUCTO -->
+
+                    <div class="campo">
+
+                        <label for="id_producto">
+                            ID del Producto
+                        </label>
+
+                        <input
+                            type="text"
+                            id="id_producto"
+                            name="id_producto"
+                            placeholder="Ejemplo: P001"
+                            required>
+
+                    </div>
+
+
+
+                    <!-- CÓDIGO -->
+
+                    <div class="campo">
+
+                        <label for="codigo">
+                            Código del Producto
+                        </label>
+
+                        <input
+                            type="text"
+                            id="codigo"
+                            name="codigo"
+                            placeholder="Ejemplo: PROD001"
+                            required>
+
+                    </div>
+
+
+
+                    <!-- CÓDIGO BARRAS -->
+
+                    <div class="campo campo-completo">
+
+                        <label for="codigo_barras">
+                            Código de Barras
+                        </label>
+
+                        <input
+                            type="text"
+                            id="codigo_barras"
+                            name="codigo_barras"
+                            placeholder="Ingrese el código de barras">
+
+                    </div>
+
+
+
+                    <!-- NOMBRE -->
+
+                    <div class="campo campo-completo">
+
+                        <label for="nombre">
+                            Nombre del Producto
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nombre"
+                            name="nombre"
+                            placeholder="Ejemplo: Cuaderno Universitario"
+                            required>
+
+                    </div>
+
+
+
+                    <!-- DESCRIPCIÓN -->
+
+                    <div class="campo campo-completo">
+
+                        <label for="descripcion">
+                            Descripción del Producto
+                        </label>
+
+                        <textarea
+                            id="descripcion"
+                            name="descripcion"
+                            placeholder="Ingrese una descripción del producto"></textarea>
+
+                    </div>
+
+
+
+                    <!-- CATEGORÍA -->
+
+                    <div class="campo">
+
+                        <label for="categoria">
+                            Categoría
+                        </label>
+
+                        <select
+                            id="categoria"
+                            name="id_categoria"
+                            required>
+
+                            <option value="">
+                                Seleccione una categoría
+                            </option>
+
+                            <option value="CAT001">
+                                📚 Papelería
+                            </option>
+
+                            <option value="CAT002">
+                                🧸 Juguetes
+                            </option>
+
+                            <option value="CAT003">
+                                🏠 Hogar
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- PRESENTACIÓN -->
+
+                    <div class="campo">
+
+                        <label for="presentacion">
+                            Presentación
+                        </label>
+
+                        <select
+                            id="presentacion"
+                            name="id_presentacion"
+                            required>
+
+                            <option value="">
+                                Seleccione una presentación
+                            </option>
+
+                            <option value="PRE001">
+                                Unidad
+                            </option>
+
+                            <option value="PRE002">
+                                Paquete
+                            </option>
+
+                            <option value="PRE003">
+                                Caja
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- MARCA -->
+
+                    <div class="campo">
+
+                        <label for="marca">
+                            Marca
+                        </label>
+
+                        <select
+                            id="marca"
+                            name="id_marca">
+
+                            <option value="">
+                                Seleccione una marca
+                            </option>
+
+                            <option value="MAR001">
+                                Faber-Castell
+                            </option>
+
+                            <option value="MAR002">
+                                Artesco
+                            </option>
+
+                            <option value="MAR003">
+                                Genérico
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- ESTADO -->
+
+                    <div class="campo">
+
+                        <label for="estado">
+                            Estado del Producto
+                        </label>
+
+                        <select
+                            id="estado"
+                            name="estado">
+
+                            <option value="true">
+                                🟢 Activo
+                            </option>
+
+                            <option value="false">
+                                🔴 Inactivo
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- BOTONES -->
+
+                <div class="botones">
+
+                    <button
+                        type="submit"
+                        class="registrar">
+
+                        ✓ Registrar Producto
+
+                    </button>
+
+
+                    <button
+                        type="reset"
+                        class="limpiar">
+
+                        ↺ Limpiar Formulario
+
+                    </button>
+
+                </div>
+
+
+                <!-- MENSAJE -->
+
+                <div
+                    id="mensaje"
+                    class="mensaje">
+
+                </div>
+
+
+            </form>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================
+         PIE DE PÁGINA
+    ========================================= -->
+
+    <footer>
+
+        © 2026 Bazar Carmelito | Sistema de Gestión de Ventas e Inventario
+
+    </footer>
+
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================= -->
+
+    <script>
+
+        const formulario =
+            document.getElementById("formProducto");
+
+        const mensaje =
+            document.getElementById("mensaje");
+
+
+        formulario.addEventListener(
+            "submit",
+            function(evento) {
+
+                evento.preventDefault();
+
+
+                mensaje.textContent =
+                    "✓ Producto registrado correctamente.";
+
+                mensaje.classList.add("exito");
+
+
+                setTimeout(function() {
+
+                    mensaje.classList.remove("exito");
+
+                    formulario.reset();
+
+                }, 3000);
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>
